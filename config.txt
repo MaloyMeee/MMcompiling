@@ -1,0 +1,155 @@
+
+let config = {
+	address: "localhost", 	// Address to listen on, can be:
+							// - "localhost", "127.0.0.1", "::1" to listen on loopback interface
+							// - another specific IPv4/6 to listen on a specific interface
+							// - "0.0.0.0", "::" to listen on any interface
+							// Default, when address config is left out or empty, is "localhost"
+	port: 8080,
+	basePath: "/", 	// The URL path where MagicMirror² is hosted. If you are using a Reverse proxy
+					// you must set the sub path here. basePath must end with a /
+	ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"], 	// Set [] to allow all IP addresses
+											
+	useHttps: false, 		// Support HTTPS or not, default "false" will use HTTP
+	httpsPrivateKey: "", 	// HTTPS private key path, only require when useHttps is true
+	httpsCertificate: "", 	// HTTPS Certificate path, only require when useHttps is true
+
+	language: "ru",
+	locale: "ru-RUS",
+	logLevel: ["INFO", "LOG", "WARN", "ERROR"], // Add "DEBUG" for even more logging
+	timeFormat: 24,
+	units: "metric",
+
+	
+	modules: [
+		{
+			module: 'MMM-Cursor',
+			config: {
+				timeout:'1000'
+				},
+			},
+		{ 
+		  module: 'MMM-SmartTouch', 
+		  position: 'bottom_center',    // This can be any of the regions.(bottom-center Recommended)
+		  config:{ 
+		    // None configuration options defined 
+		  }
+		},
+            	
+		{
+			module: "alert",
+		},
+		{
+			module: "updatenotification",
+			position: "top_bar"
+		},
+		{
+			module: "clock",
+			position: "top_left",
+			config:{
+				timezone:"Etc/GMT-3"
+			}
+		},
+		{
+			module: "calendar",
+			header: "Праздники",
+			position: "top_left",
+			config: {
+				calendars: [
+					{
+						symbol: "calendar-check",
+						url: "webcal://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics"
+					}
+				]
+			}
+		},
+		{
+			module: "compliments",
+			position: "bottom_bar"
+		},
+		{
+			module: "weather",
+			position: "top_right",
+			config: {
+				weatherProvider: "openweathermap",
+				type: "current",
+				location: "Москва",
+				locationID: "524901",
+				apiKey: "5c798b47ac0c6ed80a135979431934fa"
+			}
+		},
+		{
+			module: "weather",
+			position: "top_right",
+			header: "Прогноз погоды",
+			config: {
+				weatherProvider: "openweathermap",
+				type: "forecast",
+				location: "Москва",
+				locationID: "524901",
+				apiKey: "5c798b47ac0c6ed80a135979431934fa"
+			}
+		},
+		
+				{
+			module: "newsfeed",
+			position: "top_bar",
+			config: {
+				feeds: [
+					{
+						title: "Новости",
+						url: "http://lenta.ru/rss/"
+					},
+
+				],
+				showAsList: true,
+				/*showSourceTitle: true,
+				showPublishDate: true,
+				broadcastNewsFeeds: true,
+				broadcastNewsUpdates: true*/
+			},
+		},
+	
+		{
+			module: 'MMM-KeyBindings',
+    		config: {
+				evdev: { enabled: false },
+        		enableKeyboard: true
+			},
+		},
+		
+		
+		{
+		module: 'MMM-Carousel',
+		position: 'bottom_bar', // Required only for navigation controls
+		config: {
+			transitionInterval: 0,
+			ignoreModules: ['MMM-SmartTouch', "MMM-ModulePosition"],
+			mode: 'slides',
+			showPageIndicators: true,
+			showPageControls: false,
+			slides: {
+				main: ['clock', 'weather','compliments','calendar'],
+				"Slide 2": ['newsfeed'],
+
+			},
+			keyBindings: { 
+				enabled: true,
+				enableKeyboard: true,
+				mode: "DEFAULT",
+				map: {
+					NextSlide: "ArrowRight", 
+					PrevSlide: "ArrowLeft", 
+					Slide0:    "Home"
+				},
+				
+			}},
+		},
+		
+
+
+	]};
+
+
+/*************** DO NOT EDIT THE LINE BELOW ***************/
+if (typeof module !== "undefined") {module.exports = config;}
