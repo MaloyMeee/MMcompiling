@@ -28,13 +28,6 @@ let config = {
 				timeout:'1000'
 				},
 			},
-		{ 
-		  module: 'MMM-SmartTouch', 
-		  position: 'bottom_center',    // This can be any of the regions.(bottom-center Recommended)
-		  config:{ 
-		    // None configuration options defined 
-		  }
-		},
             	
 		{
 			module: "alert",
@@ -124,7 +117,6 @@ let config = {
 		position: 'bottom_bar', // Required only for navigation controls
 		config: {
 			transitionInterval: 0,
-			ignoreModules: ['MMM-SmartTouch', "MMM-ModulePosition"],
 			mode: 'slides',
 			showPageIndicators: true,
 			showPageControls: false,
